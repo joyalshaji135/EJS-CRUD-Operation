@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Upcoming Concerts</h2>
+    <a href="/concerts/new" class="btn btn-success">
+        <i class="fas fa-plus"></i> Add Concert
+    </a>
+</div>
+
+<% if (concerts.length === 0) { %>
+    <div class="alert alert-info">No concerts found. Add your first concert!</div>
+<% } else { %>
+    <div class="row">
+        <% concerts.forEach(concert => { %>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="<%= concert.image %>" class="card-img-top" alt="<%= concert.name %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= concert.name %></h5>
+                        <p class="card-text">
+                            <i class="fas fa-calendar-day"></i> <%= concert.date.toDateString() %><br>
+                            <i class="fas fa-clock"></i> <%= concert.time %><br>
+                            <i class="fas fa-map-marker-alt"></i> <%= concert.venue %><br>
+                            <i class="fas fa-ticket-alt"></i> $<%= concert.ticketPrice %> | Available: <%= concert.availableTickets %>
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <a href="/concerts/<%= concert._id %>" class="btn btn-sm btn-primary">View</a>
+                        <a href="/concerts/<%= concert._id %>/edit" class="btn btn-sm btn-secondary">Edit</a>
+                        <form action="/concerts/<%= concert._id %>?_method=DELETE" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+<% } %>
